@@ -1,11 +1,11 @@
 interface CartItemProps {
   id: number;
-  name: string;
+  title: string;
   price: number;
   image: string;
 }
 
-const CartItem = ({ id, name, price, image }: CartItemProps) => {
+const CartItem = ({ id, title, price, image }: CartItemProps) => {
   return (
     <div>
       <h1>Cart Item</h1>

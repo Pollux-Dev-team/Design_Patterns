@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { ProductType } from "../../../pages/ProductsPage";
 
 // TODO: add types for cart items
 export interface CartItem {
@@ -8,7 +9,7 @@ export interface CartItem {
 
 export interface CartState {
   isOpen: boolean;
-  cartItems: any[];
+  cartItems: ProductType[];
   numberOfItems: number;
 }
 
@@ -25,7 +26,7 @@ export const cartSlice = createSlice({
     toggleIsOpen: (state) => {
       state.isOpen = !state.isOpen;
     },
-    addToCart: (state, action: PayloadAction<any>) => {
+    addToCart: (state, action: PayloadAction<ProductType>) => {
       state.numberOfItems += 1;
       // check if item is already in cart
       const itemInCart = state.cartItems.find(
@@ -35,7 +36,7 @@ export const cartSlice = createSlice({
         // if item is already in cart, increase quantity
         state.cartItems = state.cartItems.map((item) =>
           item.id === action.payload.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity! + 1 }
             : item
         );
         return;
@@ -43,7 +44,7 @@ export const cartSlice = createSlice({
       // if item is not in cart, add it
       state.cartItems.push({ ...action.payload, quantity: 1 });
     },
-    removeFromCart: (state, action: PayloadAction<any>) => {
+    removeFromCart: (state, action: PayloadAction<ProductType>) => {
       state.numberOfItems -= 1;
       // check if item is already in cart
       const itemInCart = state.cartItems.find(
@@ -60,19 +61,19 @@ export const cartSlice = createSlice({
       // if item is already in cart and quantity is more than 1, decrease quantity
       state.cartItems = state.cartItems.map((item) =>
         item.id === action.payload.id
-          ? { ...item, quantity: item.quantity - 1 }
+          ? { ...item, quantity: item.quantity! - 1 }
           : item
       );
     },
-    incrementQuantity: (state, action: PayloadAction<any>) => {
+    incrementQuantity: (state, action: PayloadAction<ProductType>) => {
       state.numberOfItems += 1;
       state.cartItems = state.cartItems.map((item) =>
         item.id === action.payload.id
-          ? { ...item, quantity: item.quantity + 1 }
+          ? { ...item, quantity: item.quantity! + 1 }
           : item
       );
     },
-    decrementQuantity: (state, action: PayloadAction<any>) => {
+    decrementQuantity: (state, action: PayloadAction<ProductType>) => {
       state.numberOfItems -= 1;
       // find item in cart
       const itemInCart = state.cartItems.find(
@@ -88,7 +89,7 @@ export const cartSlice = createSlice({
       // if item is already in cart and quantity is more than 1, decrease quantity
       state.cartItems = state.cartItems.map((item) =>
         item.id === action.payload.id
-          ? { ...item, quantity: item.quantity - 1 }
+          ? { ...item, quantity: item.quantity! - 1 }
           : item
       );
     },

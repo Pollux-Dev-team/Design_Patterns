@@ -25,7 +25,7 @@ const ProductCart = ({
       addToCart({
         id: productId,
         price: productPrice,
-        name: productName,
+        title: productName,
         image: productImage,
       })
     );

@@ -32,10 +32,10 @@ const Cart = () => {
             return (
               <CartItem
                 key={item.id}
-                id={item.id}
-                name={item.name}
-                price={item.price}
-                image={item.image}
+                id={item.id!}
+                title={item.title!}
+                price={item.price!}
+                image={item.image!}
               />
             );
           })}
