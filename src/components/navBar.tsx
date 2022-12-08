@@ -6,7 +6,7 @@ const NavBar = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex h-20 justify-between  px-4 shadow-md  items-center">
+    <div className="flex h-20 justify-between  px-6 shadow-md  items-center">
       <h1 className="uppercase text-2xl" style={{ letterSpacing: "0.4rem" }}>
         Shop
       </h1>
