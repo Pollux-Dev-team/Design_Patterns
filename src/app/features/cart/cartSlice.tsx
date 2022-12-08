@@ -74,6 +74,18 @@ export const cartSlice = createSlice({
     },
     decrementQuantity: (state, action: PayloadAction<any>) => {
       state.numberOfItems -= 1;
+      // find item in cart
+      const itemInCart = state.cartItems.find(
+        (item) => item.id === action.payload.id
+      );
+      // if item is already in cart and quantity is 1, remove it
+      if (itemInCart && itemInCart.quantity === 1) {
+        state.cartItems = state.cartItems.filter(
+          (item) => item.id !== action.payload.id
+        );
+        return;
+      }
+      // if item is already in cart and quantity is more than 1, decrease quantity
       state.cartItems = state.cartItems.map((item) =>
         item.id === action.payload.id
           ? { ...item, quantity: item.quantity - 1 }
