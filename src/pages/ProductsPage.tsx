@@ -10,25 +10,29 @@ const ProductsPage = () => {
     return res.data;
   };
 
-  const { data, isError } = useQuery("products", getProduct);
-  const isLoading = true;
+  const { data, isError, isLoading } = useQuery("products", getProduct);
+
   return (
     <div>
-      {data?.map((product: any) => (
-        <ProductCard
-          key={product.id}
-          productName={product.title}
-          productPrice={product.price}
-          productImage={product.image}
-        />
-      ))}
+      <div className=" mt-4  mb-16">
+        {!isLoading &&
+          !isError &&
+          data?.map((product: any) => (
+            <ProductCard
+              key={product.id}
+              productName={product.title}
+              productPrice={product.price}
+              productImage={product.image}
+              productId={product.id}
+            />
+          ))}
+      </div>
       {isLoading && (
         <div className=" flex w-full justify-center ">
           <LoadindIndicator />
         </div>
       )}
-      {isError && <p>Error</p>}
-      test
+      {isError && <p>An error has occured, please try again!</p>}
     </div>
   );
 };
