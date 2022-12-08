@@ -2,7 +2,7 @@ import NavBar from "./components/navBar";
 import ProductsPage from "./pages/ProductsPage";
 import { useSelector } from "react-redux";
 import { RootState } from "./app/store";
-import Cart from "./components/Card";
+import Cart from "./components/Cart";
 
 /*
 (H)ere we are using the useSelector hook to get the state of the cart from the store.
@@ -19,7 +19,8 @@ const App = () => {
   return (
     <>
       <NavBar />
-      <ProductsPage />
+      {!isOpen && <ProductsPage />}
+
       {isOpen && <Cart />}
     </>
   );
