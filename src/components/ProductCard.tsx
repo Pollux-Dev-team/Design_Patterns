@@ -2,6 +2,7 @@ import { nLetters } from "../utils/nLetters";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../app/features/cart/cartSlice";
 import { useState } from "react";
+import LoadindIndicator from "./LoadingIndicator";
 interface ProductCardProps {
   productName: string;
   productPrice: number;
@@ -17,6 +18,7 @@ const ProductCart = ({
 }: ProductCardProps) => {
   const dispatch = useDispatch();
   const [isAdded, setIsAdded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleAddToCart = () => {
     dispatch(
@@ -33,7 +35,13 @@ const ProductCart = ({
   return (
     <div>
       <div className="flex justify-center py-3">
-        <img src={productImage} alt="" className=" object-contain h-56" />
+        {!imageLoaded ?? <LoadindIndicator />}
+        <img
+          src={productImage}
+          alt="product_image"
+          className=" object-contain h-56"
+          onLoad={() => setImageLoaded(true)}
+        />
       </div>
       <div className="flex  justify-between items-center  border-y-2  border-black border-solid w-full  px-4 py-2">
         <p className="text-md ">{nLetters(productName, 20)}</p>
