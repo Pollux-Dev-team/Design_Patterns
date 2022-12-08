@@ -1,9 +1,11 @@
 import NavBar from "./navBar";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../app/store";
 import CartItem from "./CartItem";
+import { clearCart } from "../app/features/cart/cartSlice";
 
 const Cart = () => {
+  const dispatch = useDispatch();
   const { cartItems } = useSelector((state: RootState) => state.cart);
 
   return (
@@ -15,6 +17,17 @@ const Cart = () => {
         </h1>
       ) : (
         <div>
+          <div className=" flex w-full justify-between items-center px-4 mt-2 ">
+            <h1 className="text-black text-2xl font-bold">Items</h1>
+            <div
+              className=" py-2 px-4 border border-solid border-black"
+              onClick={() => {
+                dispatch(clearCart());
+              }}
+            >
+              Clear
+            </div>
+          </div>
           {cartItems.map((item) => {
             return (
               <CartItem
