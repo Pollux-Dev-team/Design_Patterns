@@ -1,8 +1,9 @@
 import { nLetters } from "../utils/nLetters";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../app/features/cart/cartSlice";
 import { useState } from "react";
 import LoadindIndicator from "./LoadingIndicator";
+import { RootState } from "../app/store";
 interface ProductCardProps {
   productName: string;
   productPrice: number;
@@ -17,7 +18,9 @@ const ProductCart = ({
   productId,
 }: ProductCardProps) => {
   const dispatch = useDispatch();
-  const [isAdded, setIsAdded] = useState(false);
+  const { cartItems } = useSelector((state: RootState) => state.cart);
+  const itemInCart = cartItems.find((item) => item.id === productId);
+
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleAddToCart = () => {
@@ -29,7 +32,6 @@ const ProductCart = ({
         image: productImage,
       })
     );
-    setIsAdded(!isAdded);
   };
 
   return (
@@ -45,7 +47,7 @@ const ProductCart = ({
       </div>
       <div className="flex  justify-between items-center  border-y-2  border-black border-solid w-full  px-4 py-2">
         <p className="text-md ">{nLetters(productName, 20)}</p>
-        {!isAdded && (
+        {!itemInCart && (
           <div
             className=" border text-[#ED1C24] border-solid border-black py-1 px-4"
             onClick={handleAddToCart}
@@ -53,7 +55,7 @@ const ProductCart = ({
             Add +
           </div>
         )}
-        {isAdded && (
+        {itemInCart && (
           <div className=" border border-solid text-[#ED1C24] border-black py-1 px-4">
             Added
           </div>
