@@ -29,7 +29,11 @@ const CartItem = ({ id, title, price, image }: CartItemProps) => {
 
   return (
     <div className=" flex h-24 justify-between content-end mx-3 mb-6">
-      <img src={image} alt="product_image" />
+      <img
+        src={image}
+        alt="product_image"
+        className="max-w-[4rem] object-contain"
+      />
       <div className=" flex flex-col  justify-evenly  ">
         <p>{nLetters(title, 15)}</p>
         <p>{price} EGP</p>
