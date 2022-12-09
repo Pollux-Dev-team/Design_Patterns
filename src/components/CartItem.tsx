@@ -30,20 +30,20 @@ const CartItem = ({ id, title, price, image }: CartItemProps) => {
   return (
     <div className=" flex h-24 justify-between content-end mx-3 mb-6">
       <img src={image} alt="product_image" />
-      <div className=" flex flex-col  justify-evenly ">
+      <div className=" flex flex-col  justify-evenly  ">
         <p>{nLetters(title, 15)}</p>
         <p>{price} EGP</p>
       </div>
       <div className="flex gap-6  self-end mb-3">
         <div
-          className=" border border-solid border-black  flex h-6 w-5  justify-center items-center font-bold"
+          className=" border border-solid border-black  flex h-6 w-6  justify-center items-center font-bold "
           onClick={decrement}
         >
           -
         </div>
         {itemInCart?.quantity}
         <div
-          className="border border-solid border-black  flex h-6 w-5  justify-center items-center font-bold"
+          className="border border-solid border-black  flex h-6 w-6  justify-center items-center font-bold"
           onClick={increment}
         >
           +

@@ -22,7 +22,7 @@ const Cart = () => {
           <div className=" flex w-full justify-between items-center px-4 mt-2 mb-3  ">
             <h1 className="text-black text-2xl font-bold">Items</h1>
             <div
-              className=" py-2 px-4 border border-solid border-black"
+              className=" py-2 px-4 border border-solid border-black text-[#ED1C24]"
               onClick={() => {
                 dispatch(clearCart());
               }}
@@ -42,7 +42,7 @@ const Cart = () => {
             );
           })}
           <div className=" w-full flex justify-center items-center">
-            <div className=" w-10/12 border border-black border-solid flex justify-center  py-2 items-center font-bold uppercase mb-7">
+            <div className=" w-10/12 border border-black border-solid flex justify-center  py-2 items-center font-bold uppercase mb-7 text-[#ED1C24]">
               Pay {cartTotal.toFixed(2)}
             </div>
           </div>

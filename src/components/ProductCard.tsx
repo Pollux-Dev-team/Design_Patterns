@@ -20,7 +20,6 @@ const ProductCart = ({
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state: RootState) => state.cart);
   const itemInCart = cartItems.find((item) => item.id === productId);
-
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleAddToCart = () => {
@@ -36,7 +35,7 @@ const ProductCart = ({
 
   return (
     <div>
-      <div className="flex justify-center py-3">
+      <div className="flex justify-center py-3 relative">
         {!imageLoaded ?? <LoadindIndicator />}
         <img
           src={productImage}
@@ -44,6 +43,9 @@ const ProductCart = ({
           className=" object-contain h-56"
           onLoad={() => setImageLoaded(true)}
         />
+        <div className=" absolute right-4 top-6 bg-black text-white font-bold px-4 py-1 shadow-lg border border-solid border-white ">
+          {productPrice.toFixed(2)} EGP
+        </div>
       </div>
       <div className="flex  justify-between items-center  border-y-2  border-black border-solid w-full  px-4 py-2">
         <p className="text-md ">{nLetters(productName, 20)}</p>
