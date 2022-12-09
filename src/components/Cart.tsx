@@ -6,7 +6,9 @@ import { clearCart } from "../app/features/cart/cartSlice";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const { cartItems } = useSelector((state: RootState) => state.cart);
+  const { cartItems, cartTotal } = useSelector(
+    (state: RootState) => state.cart
+  );
 
   return (
     <div className=" absolute  h-screen w-full bg-white  top-0 z-10">
@@ -39,6 +41,11 @@ const Cart = () => {
               />
             );
           })}
+          <div className=" w-full flex justify-center items-center">
+            <div className=" w-10/12 border border-black border-solid flex justify-center  py-2 items-center font-bold uppercase mb-7">
+              Pay {cartTotal.toFixed(2)}
+            </div>
+          </div>
         </div>
       )}
     </div>

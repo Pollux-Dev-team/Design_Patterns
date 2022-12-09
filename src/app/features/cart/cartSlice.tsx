@@ -10,12 +10,14 @@ export interface CartState {
   isOpen: boolean;
   cartItems: ProductType[];
   numberOfItems: number;
+  cartTotal: number;
 }
 
 const initialState: CartState = {
   isOpen: false,
   cartItems: [],
   numberOfItems: 0,
+  cartTotal: 0,
 };
 
 export const cartSlice = createSlice({
@@ -27,6 +29,8 @@ export const cartSlice = createSlice({
     },
     addToCart: (state, action: PayloadAction<ProductType>) => {
       state.numberOfItems += 1;
+      state.cartTotal += action.payload.price!;
+
       // check if item is already in cart
       const itemInCart = state.cartItems.find(
         (item) => item.id === action.payload.id
@@ -66,6 +70,8 @@ export const cartSlice = createSlice({
     },
     incrementQuantity: (state, action: PayloadAction<ProductType>) => {
       state.numberOfItems += 1;
+      state.cartTotal += action.payload.price!;
+
       state.cartItems = state.cartItems.map((item) =>
         item.id === action.payload.id
           ? { ...item, quantity: item.quantity! + 1 }
@@ -74,6 +80,8 @@ export const cartSlice = createSlice({
     },
     decrementQuantity: (state, action: PayloadAction<ProductType>) => {
       state.numberOfItems -= 1;
+      state.cartTotal -= action.payload.price!;
+
       // find item in cart
       const itemInCart = state.cartItems.find(
         (item) => item.id === action.payload.id
@@ -95,6 +103,7 @@ export const cartSlice = createSlice({
     clearCart: (state) => {
       state.numberOfItems = 0;
       state.cartItems = [];
+      state.cartTotal = 0;
     },
   },
 });

@@ -20,11 +20,11 @@ const CartItem = ({ id, title, price, image }: CartItemProps) => {
   const itemInCart = cartItems.find((item) => item.id === id);
 
   const increment = () => {
-    dispatch(incrementQuantity({ id }));
+    dispatch(incrementQuantity({ id, price }));
   };
 
   const decrement = () => {
-    dispatch(decrementQuantity({ id }));
+    dispatch(decrementQuantity({ id, price }));
   };
 
   return (
