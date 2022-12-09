@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { ProductType } from "../../../pages/ProductsPage";
 
-// TODO: add types for cart items
 export interface CartItem {
   id: number;
 }
