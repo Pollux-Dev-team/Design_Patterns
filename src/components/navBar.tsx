@@ -8,7 +8,7 @@ const NavBar = () => {
   const { numberOfItems } = useSelector((state: RootState) => state.cart);
 
   return (
-    <div className="flex h-20 justify-between  px-6 shadow-md  items-center z-50">
+    <div className="flex h-20 justify-between  px-6 shadow-md  items-center z-50 fixed  w-full  bg-white top-0">
       <h1
         className="uppercase text-2xl"
         style={{ letterSpacing: "0.4rem", color: "#ED1C24" }}

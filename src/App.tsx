@@ -3,6 +3,7 @@ import ProductsPage from "./pages/ProductsPage";
 import { useSelector } from "react-redux";
 import { RootState } from "./app/store";
 import Cart from "./components/Cart";
+import { useState, useEffect } from "react";
 
 /*
 (H)ere we are using the useSelector hook to get the state of the cart from the store.
@@ -15,11 +16,35 @@ import Cart from "./components/Cart";
 */
 
 const App = () => {
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const [showProducts, setShowProducts] = useState<boolean>(true);
+  const [isDesktop, setIsDesktop] = useState<boolean>(width > 768);
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth);
+  }
   const isOpen = useSelector((state: RootState) => state.cart.isOpen);
+
+  useEffect(() => {
+    const handleShowProducts = () => {
+      if (!isDesktop && isOpen) {
+        setShowProducts(false);
+        return;
+      }
+      setShowProducts(true);
+    };
+    window.addEventListener("resize", handleWindowSizeChange);
+    setIsDesktop(width > 1024);
+    handleShowProducts();
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, [width, isOpen, isDesktop]);
+
   return (
     <>
       <NavBar />
-      {!isOpen && <ProductsPage />}
+      {showProducts && <ProductsPage />}
 
       {isOpen && <Cart />}
     </>

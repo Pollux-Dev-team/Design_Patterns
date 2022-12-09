@@ -34,31 +34,31 @@ const ProductCart = ({
   };
 
   return (
-    <div>
+    <div className=" shadow-lg lg:w-[22%] ">
       <div className="flex justify-center py-3 relative">
         {!imageLoaded ?? <LoadindIndicator />}
         <img
           src={productImage}
           alt="product_image"
-          className=" object-contain h-56"
+          className=" object-contain h-56 max-w-[17rem]"
           onLoad={() => setImageLoaded(true)}
         />
         <div className=" absolute right-4 top-6 bg-black text-white font-bold px-4 py-1 shadow-lg border border-solid border-white ">
           {productPrice.toFixed(2)} EGP
         </div>
       </div>
-      <div className="flex  justify-between items-center  border-y-2  border-black border-solid w-full  px-4 py-2">
+      <div className="flex  justify-between items-center  border-y-2  border-black border-solid w-full  px-4 py-2 lg:border">
         <p className="text-md ">{nLetters(productName, 20)}</p>
         {!itemInCart && (
           <div
-            className=" border text-[#ED1C24] border-solid border-black py-1 px-4"
+            className=" border text-[#ED1C24] border-solid border-black py-1 px-4 cursor-pointer hover:bg-[#ED1C24] hover:text-white transition duration-300 ease-in-out"
             onClick={handleAddToCart}
           >
             Add +
           </div>
         )}
         {itemInCart && (
-          <div className=" border border-solid text-[#ED1C24] border-black py-1 px-4">
+          <div className=" border border-solid text-white bg-[#ED1C24]  border-black py-1 px-4">
             Added
           </div>
         )}

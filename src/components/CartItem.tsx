@@ -40,14 +40,14 @@ const CartItem = ({ id, title, price, image }: CartItemProps) => {
       </div>
       <div className="flex gap-6  self-end mb-3">
         <div
-          className=" border border-solid border-black  flex h-6 w-6  justify-center items-center font-bold "
+          className=" border border-solid border-black  flex h-6 w-6  justify-center items-center font-bold cursor-pointer "
           onClick={decrement}
         >
           -
         </div>
         {itemInCart?.quantity}
         <div
-          className="border border-solid border-black  flex h-6 w-6  justify-center items-center font-bold"
+          className="border border-solid border-black  flex h-6 w-6  justify-center items-center font-bold cursor-pointer "
           onClick={increment}
         >
           +

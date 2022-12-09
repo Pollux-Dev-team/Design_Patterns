@@ -25,7 +25,7 @@ const ProductsPage = () => {
 
   return (
     <div>
-      <div className=" mt-4  mb-16">
+      <div className=" mb-16 mt-28 lg:flex lg:flex-wrap  lg:gap-6 w-full lg:justify-center  ">
         {!isLoading &&
           !isError &&
           data?.map((product: ProductType) => (
@@ -39,7 +39,7 @@ const ProductsPage = () => {
           ))}
       </div>
       {isLoading && (
-        <div className=" flex w-full justify-center ">
+        <div className=" flex w-full justify-center  mt-28 ">
           <LoadindIndicator />
         </div>
       )}
