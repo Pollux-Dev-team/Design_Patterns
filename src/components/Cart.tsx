@@ -12,7 +12,7 @@ const Cart = () => {
   );
 
   return (
-    <div className=" fixed  h-screen w-full bg-white  top-0 z-10 lg:w-[25%] lg:right-0 shadow-lg pt-24">
+    <div className=" fixed  h-screen w-full bg-white  top-0 z-10 lg:w-[25%] lg:right-0 shadow-lg pt-24 overflow-y-scroll">
       {cartItems.length === 0 ? (
         <h1 className="text-black flex w-full  h-screen justify-center items-center">
           Your cart is empty
