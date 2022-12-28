@@ -1,6 +1,30 @@
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const SignInPage = () => {
+  const [usename, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    if (!usename || !password) {
+      return toast.error("Please fill in all fields");
+    }
+    console.log("username", usename);
+    console.log("password", password);
+    navigate("/");
+  };
+
+  const handleInputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === "username") {
+      setUsername(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
+  };
+
   return (
     <section className="h-full gradient-form bg-gray-200 md:h-screen">
       <div className=" flex justify-center items-center w-full h-screen">
@@ -29,6 +53,9 @@ const SignInPage = () => {
                           className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                           id="exampleFormControlInput1"
                           placeholder="Username"
+                          name="username"
+                          value={usename}
+                          onChange={handleInputOnChange}
                         />
                       </div>
                       <div className="mb-4">
@@ -37,6 +64,9 @@ const SignInPage = () => {
                           className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                           id="exampleFormControlInput1"
                           placeholder="Password"
+                          name="password"
+                          value={password}
+                          onChange={handleInputOnChange}
                         />
                       </div>
                       <div className="text-center pt-1 mb-12 pb-1">
@@ -49,6 +79,7 @@ const SignInPage = () => {
                             background:
                               "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
                           }}
+                          onClick={handleSubmit}
                         >
                           Log in
                         </button>
