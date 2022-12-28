@@ -7,6 +7,9 @@ import { Provider } from "react-redux";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +22,10 @@ const router = createBrowserRouter([
     path: "/signin",
     element: <SignInPage />,
   },
+  {
+    path: "/signup",
+    element: <SignUpPage />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(
@@ -29,6 +36,7 @@ root.render(
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
+        <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} />
       </QueryClientProvider>
     </Provider>
   </React.StrictMode>

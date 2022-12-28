@@ -1,6 +1,37 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
-const SignInPage = () => {
+const SignUpPage = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const navigate = useNavigate();
+
+  const handleInputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === "username") {
+      setUsername(value);
+    } else if (name === "password") {
+      setPassword(value);
+    } else if (name === "address") {
+      setAddress(value);
+    } else if (name === "phone") {
+      setPhone(value);
+    }
+  };
+
+  const handleSignUp = () => {
+    console.log(username, password, address, phone);
+
+    if (!username || !password || !address || !phone) {
+      return toast.error("Please fill in all fields");
+    }
+    toast.success("Sign up successfully");
+
+    navigate("/");
+  };
   return (
     <section className="h-full gradient-form bg-gray-200 md:h-screen">
       <div className=" flex justify-center items-center w-full h-screen">
@@ -22,13 +53,16 @@ const SignInPage = () => {
                     </div>
 
                     <form>
-                      <p className="mb-4">Please login to your account</p>
+                      <p className="mb-4">Sign up</p>
                       <div className="mb-4">
                         <input
                           type="text"
+                          name="username"
                           className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                           id="exampleFormControlInput1"
                           placeholder="Username"
+                          onChange={handleInputOnChange}
+                          value={username}
                         />
                       </div>
                       <div className="mb-4">
@@ -37,6 +71,31 @@ const SignInPage = () => {
                           className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                           id="exampleFormControlInput1"
                           placeholder="Password"
+                          name="password"
+                          onChange={handleInputOnChange}
+                          value={password}
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <input
+                          type="text"
+                          className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                          id="exampleFormControlInput1"
+                          placeholder="Address"
+                          name="address"
+                          onChange={handleInputOnChange}
+                          value={address}
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <input
+                          type="phone"
+                          className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                          id="exampleFormControlInput1"
+                          placeholder="Phone Number"
+                          name="phone"
+                          onChange={handleInputOnChange}
+                          value={phone}
                         />
                       </div>
                       <div className="text-center pt-1 mb-12 pb-1">
@@ -49,8 +108,9 @@ const SignInPage = () => {
                             background:
                               "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
                           }}
+                          onClick={handleSignUp}
                         >
-                          Log in
+                          Sign up
                         </button>
                       </div>
                       <div className="flex items-center justify-between pb-6">
@@ -60,9 +120,9 @@ const SignInPage = () => {
                           className="inline-block px-6 py-2 border-2 border-red-600 text-red-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
                           data-mdb-ripple="true"
                           data-mdb-ripple-color="light"
-                          to={"/signup"}
+                          to="/signin"
                         >
-                          Sign up
+                          Login
                         </Link>
                       </div>
                     </form>
@@ -96,4 +156,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default SignUpPage;
