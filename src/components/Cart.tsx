@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../app/store";
 import CartItem from "./CartItem";
 import { clearCart } from "../app/features/cart/cartSlice";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -42,9 +43,12 @@ const Cart = () => {
             );
           })}
           <div className=" w-full flex justify-center items-center">
-            <div className=" w-10/12 border border-black border-solid flex justify-center  py-2 items-center font-bold uppercase mb-7 text-[#ED1C24] cursor-pointer">
+            <Link
+              to={"/payment"}
+              className=" w-10/12 border border-black border-solid flex justify-center  py-2 items-center font-bold uppercase mb-7 text-[#ED1C24] cursor-pointer"
+            >
               Pay {cartTotal.toFixed(2)}
-            </div>
+            </Link>
           </div>
         </div>
       )}
