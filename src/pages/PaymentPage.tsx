@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../app/store";
 import { toast } from "react-toastify";
 import { clearCart } from "../app/features/cart/cartSlice";
+import axios from "axios";
 
 const PaymentPage = () => {
   const dispatch = useDispatch();
@@ -11,8 +12,24 @@ const PaymentPage = () => {
   );
 
   const handleSubmitOrder = () => {
-    dispatch(clearCart());
-    toast.success("Order placed successfully");
+    const order = cartItems.map((item) => {
+      return {
+        book_id: item.id,
+        quantity: item.quantity,
+      };
+    });
+
+    axios
+      .post("https://book-ordering-system.herokuapp.com", {
+        items: order,
+      })
+      .then(() => {
+        dispatch(clearCart());
+        toast.success("Order placed successfully");
+      })
+      .catch((err) => {
+        toast.error("Something went wrong, please try again");
+      });
   };
 
   return (
