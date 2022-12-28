@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { useQuery } from "react-query";
 import axios from "axios";
@@ -15,6 +16,8 @@ export type ProductType = {
 };
 
 const ProductsPage = () => {
+  const [selectedCategory, setSelectedCategory] = useState<any>(null);
+
   const getProduct = async () => {
     const res = await axios.get(
       "https://book-ordering-system.herokuapp.com/books"
@@ -28,6 +31,10 @@ const ProductsPage = () => {
       "https://book-ordering-system.herokuapp.com/book_categories"
     );
     return res.data.book_categories;
+  };
+
+  const handleClickOnCategory = (category: any) => {
+    setSelectedCategory(category);
   };
 
   // @ts-ignore
@@ -52,17 +59,23 @@ const ProductsPage = () => {
         {!productCategoriesIsLoading &&
           !productCategoriesIsError &&
           productCategoriesData?.map((category: any) => (
-            <div className="  bg-red-600  py-1 px-3 hover:cursor-pointer rounded-md hover:bg-red-700 ">
+            <div
+              className={`py-1 px-3 hover:cursor-pointer rounded-md  ${
+                selectedCategory === category.category
+                  ? "bg-black text-white"
+                  : "bg-red-600 hover:bg-red-700"
+              }}`}
+              onClick={() => {
+                handleClickOnCategory(category.category);
+              }}
+              id={category.id}
+            >
               <p className="text-2xl font-bold  text-white">
                 {category.category}
               </p>
             </div>
           ))}
-        {productCategoriesIsLoading && (
-          <div>
-            <LoadindIndicator />
-          </div>
-        )}
+        {productCategoriesIsLoading && <LoadindIndicator />}
         {productCategoriesIsError && (
           <p>An error has occured, please try again!</p>
         )}
