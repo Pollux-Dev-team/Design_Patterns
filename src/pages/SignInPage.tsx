@@ -1,11 +1,15 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setUser } from "../app/features/user/userSlice";
 
 const SignInPage = () => {
   const [usename, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = () => {
     if (!usename || !password) {
@@ -13,7 +17,19 @@ const SignInPage = () => {
     }
     console.log("username", usename);
     console.log("password", password);
-    navigate("/");
+    axios
+      .post("https://book-ordering-system.herokuapp.com/auth/login", {
+        user_name: usename,
+        password: password,
+      })
+      .then((res) => {
+        dispatch(setUser(res.data.user));
+        navigate("/");
+        toast.success("Login successfully");
+      })
+      .catch((err) => {
+        toast.error("Something went wrong, please try again");
+      });
   };
 
   const handleInputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,11 +53,11 @@ const SignInPage = () => {
                     <div className=" flex flex-col  justify-center items-center gap-2 mb-12">
                       <img
                         className="mx-auto w-48"
-                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
+                        src="./assets/Boox.png"
                         alt="logo"
                       />
                       <h4 className="text-xl font-semibold mt-1 pb-1">
-                        We are The Lotus Team
+                        We are Boox
                       </h4>
                     </div>
 

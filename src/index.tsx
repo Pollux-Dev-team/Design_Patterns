@@ -12,6 +12,7 @@ import ProfilePage from "./pages/ProfilePage";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PaymentPage from "./pages/PaymentPage";
+import ProductDetails from "./pages/ProductDetails";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/payment",
     element: <PaymentPage />,
+  },
+  {
+    path: "/product/:id",
+    element: <ProductDetails />,
   },
 ]);
 

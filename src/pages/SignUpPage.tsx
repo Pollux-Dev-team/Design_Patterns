@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const SignUpPage = () => {
   const [username, setUsername] = useState("");
@@ -28,9 +29,26 @@ const SignUpPage = () => {
     if (!username || !password || !address || !phone) {
       return toast.error("Please fill in all fields");
     }
-    toast.success("Sign up successfully");
-
-    navigate("/");
+    axios
+      .post("https://book-ordering-system.herokuapp.com/users", {
+        first_name: null,
+        last_name: null,
+        email: null,
+        date_of_birth: null,
+        gender: null,
+        profile_picture_url: null,
+        user_name: username,
+        password: password,
+        address: address,
+        phone: phone,
+      })
+      .then((res) => {
+        toast.success("Sign up successfully");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <section className="h-full gradient-form bg-gray-200 md:h-screen">
@@ -44,11 +62,11 @@ const SignUpPage = () => {
                     <div className=" flex flex-col  justify-center items-center gap-2 mb-12">
                       <img
                         className="mx-auto w-48"
-                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
+                        src="./assets/Boox.png"
                         alt="logo"
                       />
                       <h4 className="text-xl font-semibold mt-1 pb-1">
-                        We are The Lotus Team
+                        We are Boox
                       </h4>
                     </div>
 

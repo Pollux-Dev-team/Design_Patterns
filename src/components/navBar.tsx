@@ -11,11 +11,11 @@ const NavBar = () => {
   return (
     <div className="flex h-20 justify-between  px-6 shadow-md  items-center z-50 fixed  w-full  bg-white top-0">
       <Link
-        className="uppercase text-2xl"
+        className="uppercase "
         style={{ letterSpacing: "0.4rem", color: "#ED1C24" }}
         to="/"
       >
-        Shop
+        <img src="./assets/Boox.png" alt="logo" className="   w-20 " />
       </Link>
       <div className=" flex justify-center items-center gap-8  ">
         <Link

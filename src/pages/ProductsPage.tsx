@@ -68,7 +68,7 @@ const ProductsPage = () => {
               onClick={() => {
                 handleClickOnCategory(category.category);
               }}
-              id={category.id}
+              key={category.id}
             >
               <p className="text-2xl font-bold  text-white">
                 {category.category}

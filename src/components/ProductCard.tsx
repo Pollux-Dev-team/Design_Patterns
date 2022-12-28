@@ -4,6 +4,7 @@ import { addToCart } from "../app/features/cart/cartSlice";
 import { useState } from "react";
 import LoadindIndicator from "./LoadingIndicator";
 import { RootState } from "../app/store";
+import { Link } from "react-router-dom";
 interface ProductCardProps {
   productName: string;
   productPrice: number;
@@ -49,19 +50,27 @@ const ProductCart = ({
       </div>
       <div className="flex  justify-between items-center  border-y-2  border-black border-solid w-full  px-4 py-2 lg:border">
         <p className="text-md ">{nLetters(productName, 20)}</p>
-        {!itemInCart && (
-          <div
-            className=" border text-[#ED1C24] border-solid border-black py-1 px-4 cursor-pointer hover:bg-[#ED1C24] hover:text-white transition duration-300 ease-in-out"
-            onClick={handleAddToCart}
+        <div className=" flex flex-col gap-2">
+          {!itemInCart && (
+            <div
+              className=" border text-[#ED1C24] border-solid border-black py-1 px-4 cursor-pointer hover:bg-[#ED1C24] hover:text-white transition duration-300 ease-in-out"
+              onClick={handleAddToCart}
+            >
+              Add +
+            </div>
+          )}
+          {itemInCart && (
+            <div className=" border border-solid text-white bg-[#ED1C24]  border-black py-1 px-4">
+              Added
+            </div>
+          )}
+          <Link
+            to={`/product/${productId}`}
+            className="border text-[#ED1C24] border-solid border-black py-1 px-4 cursor-pointer hover:bg-[#ED1C24] hover:text-white transition duration-300 ease-in-out"
           >
-            Add +
-          </div>
-        )}
-        {itemInCart && (
-          <div className=" border border-solid text-white bg-[#ED1C24]  border-black py-1 px-4">
-            Added
-          </div>
-        )}
+            Details
+          </Link>
+        </div>
       </div>
     </div>
   );

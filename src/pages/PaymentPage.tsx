@@ -20,7 +20,7 @@ const PaymentPage = () => {
     });
 
     axios
-      .post("https://book-ordering-system.herokuapp.com", {
+      .post("https://book-ordering-system.herokuapp.com/orders", {
         items: order,
       })
       .then(() => {
