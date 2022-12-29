@@ -13,7 +13,7 @@ const ProductDetails = () => {
   const [review, setReview] = useState<any>("");
   const [rating, setRating] = useState<number>(0);
   const [isSpoiler, setIsSpoiler] = useState<boolean>(false);
-
+  const [reviews, setReviews] = useState<any>([]);
   const handleReviewChange = (e: any) => {
     setReview(e.target.value);
   };
@@ -89,7 +89,8 @@ const ProductDetails = () => {
       )
       .then((res) => {
         console.log("reviews");
-        console.log(res.data);
+        console.log(res.data.reviews);
+        setReviews(res.data.reviews);
       });
   }, []);
 
@@ -171,6 +172,18 @@ const ProductDetails = () => {
                   Submit
                 </button>
               </div>
+            </div>
+            <div className=" flex flex-col gap-2">
+              {reviews.map((review: any) => (
+                <div
+                  className=" p-2 border border-solid border-black flex flex-col"
+                  key={review.id}
+                >
+                  {review.review}
+                  <div>Rating: {review.rating}</div>
+                  <div>Is Spoiler: {review.is_spoiler ? "YES" : "NO"}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
