@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import logo from "../assets/Boox.png";
 import { setUser } from "../app/features/user/userSlice";
 
 const SignInPage = () => {
@@ -51,11 +52,7 @@ const SignInPage = () => {
                 <div className="lg:w-6/12 px-4 md:px-0">
                   <div className="md:p-12 md:mx-6">
                     <div className=" flex flex-col  justify-center items-center gap-2 mb-12">
-                      <img
-                        className="mx-auto w-48"
-                        src="./assets/Boox.png"
-                        alt="logo"
-                      />
+                      <img className="mx-auto w-48" src={logo} alt="logo" />
                       <h4 className="text-xl font-semibold mt-1 pb-1">
                         We are Boox
                       </h4>

@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const [product, setProduct] = useState<any>(null);
-  const [review, setReview] = useState<any>("ASADS");
+  const [review, setReview] = useState<any>("");
   const [rating, setRating] = useState<number>(0);
   const [isSpoiler, setIsSpoiler] = useState<boolean>(false);
 
@@ -19,9 +19,11 @@ const ProductDetails = () => {
   };
 
   const handleRatingChange = (e: any) => {
-    // max rating is 5
+    // max rating is 5 and min is 0
     if (e.target.value > 5) {
       setRating(5);
+    } else if (e.target.value < 0) {
+      setRating(0);
     } else {
       setRating(e.target.value);
     }
@@ -79,8 +81,15 @@ const ProductDetails = () => {
     axios
       .get(`https://book-ordering-system.herokuapp.com/books/${productId}`)
       .then((res) => {
-        console.log(res.data);
         setProduct(res.data.book);
+      });
+    axios
+      .get(
+        `https://book-ordering-system.herokuapp.com/books/${productId}/book_reviews`
+      )
+      .then((res) => {
+        console.log("reviews");
+        console.log(res.data);
       });
   }, []);
 
