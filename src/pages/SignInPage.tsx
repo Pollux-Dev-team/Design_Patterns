@@ -100,7 +100,7 @@ const SignInPage = () => {
                           Log in
                         </button>
                       </div>
-                      <div className="flex items-center justify-between pb-6">
+                      {/* <div className="flex items-center justify-between pb-6">
                         <p className="mb-0 mr-2">Don't have an account?</p>
                         <Link
                           type="button"
@@ -111,7 +111,7 @@ const SignInPage = () => {
                         >
                           Sign up
                         </Link>
-                      </div>
+                      </div> */}
                     </form>
                   </div>
                 </div>

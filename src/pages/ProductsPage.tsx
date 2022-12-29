@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import { useQuery } from "react-query";
 import axios from "axios";
@@ -17,14 +17,31 @@ export type ProductType = {
 
 const ProductsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<any>(null);
+  const [productsData, setProductsData] = useState<any>(null);
+  const [productsIsError, setProductsIsError] = useState<any>(false);
+  const [productsIsLoading, setProductsIsLoading] = useState<any>(true);
 
-  const getProduct = async () => {
-    const res = await axios.get(
-      "https://book-ordering-system.herokuapp.com/books"
-    );
-
-    return res.data.books;
-  };
+  useEffect(() => {
+    const getProduct = () => {
+      console.log(selectedCategory);
+      axios
+        .get(
+          !selectedCategory
+            ? "https://book-ordering-system.herokuapp.com/books"
+            : "https://book-ordering-system.herokuapp.com/books?category_id=" +
+                selectedCategory
+        )
+        .then((res) => {
+          console.log(res.data.books);
+          setProductsData(res.data.books);
+          setProductsIsLoading(false);
+        })
+        .catch((err) => {
+          setProductsIsError(true);
+        });
+    };
+    getProduct();
+  }, [selectedCategory]);
 
   const getProductCategories = async () => {
     const res = await axios.get(
@@ -34,15 +51,12 @@ const ProductsPage = () => {
   };
 
   const handleClickOnCategory = (category: any) => {
+    if (selectedCategory === category) {
+      setSelectedCategory(null);
+      return;
+    }
     setSelectedCategory(category);
   };
-
-  // @ts-ignore
-  const {
-    data: productsData,
-    isError: productsIsError,
-    isLoading: productsIsLoading,
-  } = useQuery("products", getProduct);
 
   const {
     // @ts-ignore
@@ -61,12 +75,12 @@ const ProductsPage = () => {
           productCategoriesData?.map((category: any) => (
             <div
               className={`py-1 px-3 hover:cursor-pointer rounded-md  ${
-                selectedCategory === category.category
+                selectedCategory === category.id
                   ? "bg-black text-white"
                   : "bg-red-600 hover:bg-red-700"
               }}`}
               onClick={() => {
-                handleClickOnCategory(category.category);
+                handleClickOnCategory(category.id);
               }}
               key={category.id}
             >
@@ -81,8 +95,7 @@ const ProductsPage = () => {
         )}
       </div>
       <div className=" mb-16   lg:flex lg:flex-wrap  lg:gap-6 w-full lg:justify-center  ">
-        {!productsIsLoading &&
-          !productsIsError &&
+        {!productsIsLoading && !productsIsError && productsData.length > 0 ? (
           productsData?.map((product: any) => (
             <ProductCard
               key={product.id}
@@ -91,7 +104,10 @@ const ProductsPage = () => {
               productImage={product.cover_url!}
               productId={product.id!}
             />
-          ))}
+          ))
+        ) : (
+          <p className="text-2xl font-bold text-center">No products found!</p>
+        )}
       </div>
       {productsIsLoading && (
         <div className=" flex w-full justify-center  mt-28 ">

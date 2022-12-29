@@ -7,6 +7,7 @@ import axios from "axios";
 
 const PaymentPage = () => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.user);
   const { cartItems, cartTotal } = useSelector(
     (state: RootState) => state.cart
   );
@@ -21,6 +22,8 @@ const PaymentPage = () => {
 
     axios
       .post("https://book-ordering-system.herokuapp.com/orders", {
+        // @ts-ignore
+        user_id: user.id,
         items: order,
       })
       .then(() => {
