@@ -5,12 +5,30 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../app/store";
 import { addToCart } from "../app/features/cart/cartSlice";
 import Cart from "../components/Cart";
+import { toast } from "react-toastify";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const [product, setProduct] = useState<any>(null);
+  const [review, setReview] = useState<any>("ASADS");
+  const [rating, setRating] = useState<number>(0);
+  const [isSpoiler, setIsSpoiler] = useState<boolean>(false);
+
+  const handleReviewChange = (e: any) => {
+    setReview(e.target.value);
+  };
+
+  const handleRatingChange = (e: any) => {
+    // max rating is 5
+    if (e.target.value > 5) {
+      setRating(5);
+    } else {
+      setRating(e.target.value);
+    }
+  };
 
   const { cartItems } = useSelector((state: RootState) => state.cart);
+  const { user } = useSelector((state: RootState) => state.user);
   const isOpen = useSelector((state: RootState) => state.cart.isOpen);
 
   const itemInCart = product
@@ -26,6 +44,31 @@ const ProductDetails = () => {
         image: product.cover_url,
       })
     );
+  };
+
+  const handleAddReview = () => {
+    if (!user) {
+      toast.error("You need to login first");
+      return;
+    }
+    axios
+      .post(`https://book-ordering-system.herokuapp.com/book_reviews`, {
+        book_id: product.id,
+        //@ts-ignore
+        user_id: user.id,
+        is_spoiler: isSpoiler,
+        rating: rating,
+        review: review,
+      })
+      .then((res) => {
+        setIsSpoiler(false);
+        setRating(0);
+        setReview("");
+        toast.success("Review added successfully");
+      })
+      .catch((err) => {
+        toast.error("Something went wrong");
+      });
   };
 
   useEffect(() => {
@@ -45,7 +88,7 @@ const ProductDetails = () => {
     <div>
       <NavBar />
       {product && (
-        <div className=" w-full h-screen flex  justify-center items-center">
+        <div className=" w-full h-screen flex flex-col justify-center items-center gap-4 mt-24">
           <div className=" flex gap-6 ">
             <img src={product.cover_url} alt="" />
             <div className=" flex flex-col  justify-around">
@@ -80,6 +123,44 @@ const ProductDetails = () => {
                     Added
                   </div>
                 )}
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col justify-center items-center gap-2 ">
+            <h4 className=" font-bold text-xl">Add Review</h4>
+            <div className=" flex  items-center gap-6">
+              <textarea
+                className=" pl-4 pt-2 w-80 h-40 border border-solid border-black resize-none rounded-md "
+                name=""
+                id=""
+                value={review}
+                onChange={handleReviewChange}
+              ></textarea>
+              <div className="  flex flex-col gap-4">
+                <div className=" flex gap-2">
+                  <label htmlFor="isSpoiler">is Spoiler ?</label>
+                  <input
+                    type="checkbox"
+                    name="isSpoiler"
+                    id="isSpoiler"
+                    onChange={() => setIsSpoiler(!isSpoiler)}
+                  />
+                </div>
+                <input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  value={rating}
+                  onChange={handleRatingChange}
+                  className=" border border-solid border-black rounded-md pl-2 w-1/2"
+                />
+
+                <button
+                  className="bg-[#ED1C24] text-white px-4 py-2 rounded-md h-1/4"
+                  onClick={handleAddReview}
+                >
+                  Submit
+                </button>
               </div>
             </div>
           </div>

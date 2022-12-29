@@ -25,7 +25,7 @@ const PaymentPage = () => {
         // @ts-ignore
         user_id: user.id,
         items: order,
-      })
+      }, {})
       .then(() => {
         dispatch(clearCart());
         toast.success("Order placed successfully");
